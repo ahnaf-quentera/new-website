@@ -23,7 +23,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { PanelLeftIcon } from "lucide-react"
+import { Menu } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -271,7 +271,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <Menu />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
@@ -330,11 +330,12 @@ function SidebarInput({
 }
 
 function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
+  const { open } = useSidebar()
   return (
     <div
       data-slot="sidebar-header"
       data-sidebar="header"
-      className={cn("flex flex-col gap-2 p-2", className)}
+      className={cn("flex flex-col gap-2 p-2", className, !open && "items-center" )}
       {...props}
     />
   )
