@@ -164,7 +164,7 @@ export default function Home() {
     icon: React.ElementType;
     label: string;
     active?: boolean;
-    children?: { label: string; href: string }[];
+    children?: { label: string; href: string, icon: React.ElementType; }[];
   }) => {
     if (children) {
       return (
