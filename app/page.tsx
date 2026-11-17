@@ -33,16 +33,34 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarProvider,
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import Header from "@/components/Header/Header";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import Link from "next/link";
 
 const sidebarTop = [
   { icon: Dices, label: "Casino", active: true },
-  { icon: Volleyball, label: "Sports", active: true },
-  { icon: Gift, label: "Promotions", chevron: true },
+  { icon: Volleyball, label: "Sports" },
+  {
+    icon: Gift,
+    label: "Promotions",
+    chevron: true,
+    children: [
+      { label: "Welcome Bonus", href: "/promotions/welcome" },
+      { label: "Weekly Reload", href: "/promotions/welcome" },
+      { label: "VIP Offers", href: "/promotions/welcome" },
+    ],
+  },
   { icon: Mountain, label: "VIP Club" },
   { icon: Puzzle, label: "Affiliate" },
   { icon: Trophy, label: "Challenges" },
@@ -119,27 +137,57 @@ export default function Home() {
     icon: Icon,
     label,
     active,
-    chevron,
+    children,
   }: {
     icon: React.ElementType;
     label: string;
     active?: boolean;
-    chevron?: boolean;
-  }) => (
-    <SidebarMenuItem key={label}>
-      <SidebarMenuButton
-        isActive={active}
-        tooltip={label}
-        className="h-10"
-      >
-        <Icon />
-        <span>{label}</span>
-        {chevron && (
-          <ChevronRight className="text-muted-foreground ml-auto size-3 group-data-[collapsible=icon]:hidden" />
-        )}
-      </SidebarMenuButton>
-    </SidebarMenuItem>
-  );
+    children?: { label: string; href: string }[];
+  }) => {
+    if (children) {
+      return (
+        <Collapsible
+          key={label}
+          render={<SidebarMenuItem />}
+          className="group/collapsible"
+        >
+          <CollapsibleTrigger
+            className={"w-full"}
+            render={
+              <SidebarMenuButton tooltip={label} className="h-10">
+                <Icon />
+                <span>{label}</span>
+                <ChevronRight className="text-muted-foreground ml-auto size-3 transition-transform group-data-[collapsible=icon]:hidden group-data-[state=open]/collapsible:rotate-90" />
+              </SidebarMenuButton>
+            }
+          ></CollapsibleTrigger>
+
+          <CollapsibleContent>
+            <SidebarMenuSub>
+              {children.map((child) => (
+                <SidebarMenuSubItem key={child.label}>
+                  <SidebarMenuSubButton
+                    render={<Link href={child.href}>{child.label}</Link>}
+                  >
+                    {child.label}
+                  </SidebarMenuSubButton>
+                </SidebarMenuSubItem>
+              ))}
+            </SidebarMenuSub>
+          </CollapsibleContent>
+        </Collapsible>
+      );
+    }
+
+    return (
+      <SidebarMenuItem key={label}>
+        <SidebarMenuButton isActive={active} tooltip={label} className="h-10">
+          <Icon />
+          <span>{label}</span>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
+  };
 
   return (
     <SidebarProvider defaultOpen={false}>
