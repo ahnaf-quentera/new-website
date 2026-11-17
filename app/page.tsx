@@ -164,7 +164,7 @@ export default function Home() {
     icon: React.ElementType;
     label: string;
     active?: boolean;
-    children?: { label: string; href: string, icon: React.ElementType; }[];
+    children?: { label: string; href: string; icon: React.ElementType }[];
   }) => {
     if (children) {
       return (
@@ -337,7 +337,7 @@ export default function Home() {
 
           {/* Trending games */}
           <section className="space-y-4">
-            <h2 className="flex items-center gap-2 text-xl font-semibold">
+            <h2 className="flex items-center gap-2 font-semibold">
               <TrendingUp className="text-muted-foreground size-5" />
               Trending Games
               <ChevronRight className="size-5" />
@@ -405,7 +405,7 @@ export default function Home() {
 
           {/* Races & Raffles */}
           <section className="space-y-4 pt-4">
-            <h2 className="flex items-center gap-2 text-xl font-semibold">
+            <h2 className="flex items-center gap-2 font-semibold">
               <Timer className="text-muted-foreground size-5" />
               Races &amp; Raffles
             </h2>

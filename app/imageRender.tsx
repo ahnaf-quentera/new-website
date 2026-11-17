@@ -51,7 +51,7 @@ export function SectionHeader({
   title: string;
 }) {
   return (
-    <h2 className="flex items-center gap-2 text-xl font-semibold">
+    <h2 className="flex items-center gap-2 font-semibold">
       <Icon className="text-muted-foreground size-5" />
       {title}
       <ChevronRight className="size-5" />
