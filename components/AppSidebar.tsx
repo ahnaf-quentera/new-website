@@ -20,12 +20,14 @@ import {
   Dices,
   Gift,
   Globe,
+  HandCoins,
   Handshake,
   Headset,
   MessageSquareMore,
   Mountain,
   Newspaper,
   Puzzle,
+  RefreshCw,
   ShieldCheck,
   Trophy,
   Volleyball,
@@ -38,6 +40,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "cn";
 
 type SidebarLink = {
+  icon?: LucideIcon;
   label: string;
   href: string;
 };
@@ -63,9 +66,9 @@ const sidebarTop: SidebarItem[] = [
     label: "Promotions",
     chevron: true,
     children: [
-      { label: "Welcome Bonus", href: "/promotions/welcome" },
-      { label: "Weekly Reload", href: "/promotions/welcome" },
-      { label: "VIP Offers", href: "/promotions/welcome" },
+      { icon: Gift, label: "Welcome Bonus", href: "/promotions/welcome" },
+      { icon: RefreshCw, label: "Weekly Reload", href: "/promotions/welcome" },
+      { icon: HandCoins, label: "VIP Offers", href: "/promotions/welcome" },
     ],
   },
   { icon: Mountain, label: "VIP Club" },
@@ -111,10 +114,11 @@ function SidebarNavItem({
 
         <CollapsibleContent>
           <SidebarMenuSub>
-            {children.map((child) => (
-              <SidebarMenuSubItem key={child.label}>
-                <SidebarMenuSubButton render={<Link href={child.href} />}>
-                  {child.label}
+            {children.map(({ icon: ChildIcon, label: childLabel, href }) => (
+              <SidebarMenuSubItem key={childLabel}>
+                <SidebarMenuSubButton render={<Link href={href} />}>
+                  {ChildIcon && <ChildIcon />}
+                  <span>{childLabel}</span>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
             ))}
