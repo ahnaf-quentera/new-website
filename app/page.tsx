@@ -78,9 +78,9 @@ const sidebarTop = [
     label: "Promotions",
     chevron: true,
     children: [
-      { icon: Gift, label: "Welcome Bonus", href: "/promotions/welcome" },
-      { icon: Gift, label: "Weekly Reload", href: "/promotions/welcome" },
-      { icon: Gift, label: "VIP Offers", href: "/promotions/welcome" },
+      { icon: Gift, label: "Welcome Bonus", href: "/#" },
+      { icon: Gift, label: "Weekly Reload", href: "/#" },
+      { icon: Gift, label: "VIP Offers", href: "/#" },
     ],
   },
   { icon: Mountain, label: "VIP Club" },
@@ -258,7 +258,7 @@ export default function Home() {
             />
 
             <div className="relative z-10 mx-auto flex max-w-md flex-col items-center gap-4 px-6 py-3 text-center">
-              <h1 className="text-3xl leading-tight font-bold text-balance md:text-4xl">
+              <h1 className="text-xl leading-tight font-bold text-balance md:text-3xl">
                 World&apos;s Largest Online Casino and Sportsbook
               </h1>
 
