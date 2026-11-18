@@ -334,7 +334,7 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="sidebar-header"
       data-sidebar="header"
-      className={cn("flex justify-center shadow-[0_10px_15px_-3px_#0003,0_4px_6px_-2px_#0000001a]")}
+      className={cn("flex shadow-[0_10px_15px_-3px_#0003,0_4px_6px_-2px_#0000001a]")}
       {...props}
     />
   )
