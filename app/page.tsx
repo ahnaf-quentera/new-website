@@ -120,7 +120,7 @@ export default function Home() {
 
         <div className="mx-auto w-full max-w-[calc(1200px+6vw)] px-[3vw] space-y-3 py-3 pb-8">
           {/* Hero */}
-          <section className="border-border flex relative overflow-hidden rounded-xl border bg-gradient-to-br">
+          <section className="border-border flex relative overflow-hidden rounded-xl border bg-linear-to-br">
             <Image
               src="/banner.png"
               alt=""
