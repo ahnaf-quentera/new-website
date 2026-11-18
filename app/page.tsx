@@ -226,7 +226,7 @@ export default function Home() {
               <ChevronRight className="size-5" />
             </h2>
 
-            <div className="grid grid-cols-5 gap-3 sm:grid-cols-6 lg:grid-cols-8">
+            <div className="grid grid-cols-3 gap-3 sm:grid-cols-6 lg:grid-cols-8">
               {games.map((game) => (
                 <div key={game.title} className="space-y-2">
                   <div
