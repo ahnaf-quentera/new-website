@@ -61,7 +61,7 @@ export function SectionHeader({
 
 export function TileGrid({ items }: { items: Tile[] }) {
   return (
-    <div className="grid grid-cols-5 gap-3 sm:grid-cols-6 lg:grid-cols-8">
+    <div className="grid grid-cols-3 gap-3 sm:grid-cols-6 lg:grid-cols-8">
       {items.map((item) => (
         <Link key={item.title} href="#" className="group space-y-2">
           <Card className="gap-0 overflow-hidden rounded-lg border-0 p-0 py-0 ring-0 transition-transform duration-200 group-hover:-translate-y-1">
