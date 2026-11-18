@@ -46,11 +46,11 @@ import RegisterModal from "@/components/Auth/RegisterModal";
 import SignInModal from "@/components/Auth/SignInModal";
 import ForgotPasswordModal from "@/components/Auth/ForgotPasswordModal";
 
-const socials = [
-  { label: "Google", glyph: "G", className: "text-red-400" },
-  { label: "Facebook", glyph: "f", className: "text-blue-400" },
-  { label: "Kick", glyph: "K", className: "text-green-400" },
-];
+// const socials = [
+//   { label: "Google", glyph: "G", className: "text-red-400" },
+//   { label: "Facebook", glyph: "f", className: "text-blue-400" },
+//   { label: "Kick", glyph: "K", className: "text-green-400" },
+// ];
 
 const games = [
   {
@@ -117,7 +117,7 @@ export default function Home() {
 
         <div className="mx-auto w-full max-w-[calc(1200px+6vw)] px-[3vw] space-y-3 py-3 pb-8">
           {/* Hero */}
-          <section className="border-border flex relative overflow-hidden rounded-xl border bg-linear-to-br">
+          <section className="border-border flex justify-center relative overflow-hidden rounded-xl border bg-linear-to-br p-12">
             {/* Mobile */}
             <Image
               src="/banner-mobile.png"
@@ -130,7 +130,7 @@ export default function Home() {
 
             {/* Desktop */}
             <Image
-              src="/banner.png"
+              src="/banner-desktop-centered.png"
               alt=""
               fill
               priority
@@ -139,7 +139,7 @@ export default function Home() {
             />
 
             <div className="relative z-5 mx-auto flex w-full max-w-87.5 flex-col items-center gap-4 px-6 pt-[55vw] pb-6 text-center md:mx-0 md:w-auto md:pt-3 md:pb-3">
-              <h1 className="text-xl leading-tight font-bold text-balance md:text-3xl">
+              <h1 className="text-lg leading-tight font-bold text-balance md:text-3xl">
                 World&apos;s Largest Online Casino and Sportsbook
               </h1>
 
@@ -151,9 +151,9 @@ export default function Home() {
                 Register
               </Button>
 
-              <p className=" text-sm font-medium">Or Continue With</p>
+              {/* <p className=" text-sm font-medium">Or Continue With</p> */}
 
-              <div className="grid w-full grid-cols-3 gap-3">
+              {/* <div className="grid w-full grid-cols-3 gap-3">
                 {socials.map(({ label, glyph, className }) => (
                   <Button
                     key={label}
@@ -166,7 +166,7 @@ export default function Home() {
                     </span>
                   </Button>
                 ))}
-              </div>
+              </div> */}
             </div>
           </section>
 

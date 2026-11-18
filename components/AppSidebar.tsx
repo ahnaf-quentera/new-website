@@ -85,11 +85,13 @@ const sidebarTop: SidebarItem[] = [
 
 // Small right arrow, only on the collapsed rail.
 // It sits next to the button (not inside it) because the button has overflow-hidden.
+// Anchored from the left (44px button - 12px arrow) so it stays on the button while
+// the sidebar width animates; `right-0` slid in from the far edge of the wide li.
 function CollapsedArrow() {
   return (
     <ChevronRight
       aria-hidden
-      className="pointer-events-none absolute top-1/2 right-0 hidden size-3 -translate-y-1/2 text-icon-color group-hover/menu-item:text-sidebar-accent-foreground group-data-[collapsible=icon]:block"
+      className="pointer-events-none absolute top-1/2 left-8 hidden size-3 -translate-y-1/2 text-icon-color group-hover/menu-item:text-sidebar-accent-foreground group-data-[collapsible=icon]:block"
     />
   );
 }
