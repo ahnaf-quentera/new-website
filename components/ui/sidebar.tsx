@@ -329,7 +329,7 @@ function SidebarInput({
   )
 }
 
-function SidebarHeader({ ...props }: React.ComponentProps<"div">) {
+function SidebarHeader({className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="sidebar-header"
@@ -489,7 +489,7 @@ const sidebarMenuButtonVariants = cva(
     // Open: 12px top/bottom, 10px left/right, 16px bold text
     "px-4 py-3 text-base font-bold",
     // Icons: 20x20, icon-color by default, white on hover
-    "[&_svg]:size-5 [&_svg]:shrink-0 [&>span:last-child]:truncate [&>svg:first-child]:text-icon-color hover:[&>svg:first-child]:text-white",
+    "[&_svg]:size-5 [&_svg]:shrink-0 [&>span:last-child]:truncate [&>svg:first-child]:text-icon-color hover:[&>svg:first-child]:text-sidebar-accent-foreground",
     // Collapsed: 44x44 tile, icon centred (44 - 2*12 = 20)
     "group-data-[collapsible=icon]:size-11! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded-md group-data-[collapsible=icon]:p-3! group-data-[collapsible=icon]:[&>span]:hidden",
     // States
@@ -701,7 +701,7 @@ function SidebarMenuSubButton({
           // Same as menu items: 12px top/bottom, 10px left/right, 16px bold, 20px icons
           "flex min-w-0 cursor-pointer items-center gap-2 overflow-hidden px-4 py-3 text-base font-bold text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden",
           "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground",
-          "[&>span:last-child]:truncate [&>svg]:size-5 [&>svg]:shrink-0 [&>svg]:text-icon-color hover:[&>svg]:text-white",
+          "[&>span:last-child]:truncate [&>svg]:size-5 [&>svg]:shrink-0 [&>svg]:text-icon-color hover:[&>svg]:text-sidebar-accent-foreground",
           className
         ),
       },

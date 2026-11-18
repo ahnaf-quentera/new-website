@@ -50,6 +50,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   --color-icon-color: var(--icon-color);
+  --color-icon-tile: var(--icon-tile);
 }
 
 :root {
@@ -96,7 +97,8 @@
   --primary-foreground: #0B0B0D;
   --secondary: #3e586c;
   --secondary-foreground: white;
-  --icon-color: blue;
+  --icon-color: #d6d3d1; /* soft white (stone-300) */
+  --icon-tile: #44403c; /* dark stone (stone-700) */
   --card: oklch(0.205 0 0);
   --foreground: oklch(0.985 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -133,6 +135,7 @@
   --secondary: #3e586c;
   --secondary-foreground: white;
   --icon-color: #a1bfd6;
+  --icon-tile: #213545;
   --sidebar: #0e202d;
   --sidebar-border: #a1bfd6;
   --sidebar-accent: #ecf3f90d;
