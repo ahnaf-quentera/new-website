@@ -91,10 +91,10 @@
   --sidebar-border: oklch(32.722% 0.00858 106.939);
 
   --radius: 0.625rem;
-  --background: oklch(21.6% 0.006 56.043);
   --footer-background: oklch(26.8% 0.007 34.298);
-  --primary: #FFB81C;
-  --primary-foreground: #0B0B0D;
+  --background: oklch(21.6% 0.006 56.043);
+  --primary: #ffb81c;
+  --primary-foreground: #0b0b0d;
   --secondary: #3e586c;
   --secondary-foreground: white;
   --icon-color: #d6d3d1; /* soft white (stone-300) */
