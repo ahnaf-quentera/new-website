@@ -252,7 +252,7 @@ function Sidebar({
 }
 
 function SidebarTrigger({
-  className='h-15 w-15',
+  className = 'h-15 w-15',
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
@@ -334,7 +334,10 @@ function SidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="sidebar-header"
       data-sidebar="header"
-      className={cn("flex shadow-[0_10px_15px_-3px_#0003,0_4px_6px_-2px_#0000001a]")}
+      className={cn(
+        "flex shadow-[0_10px_15px_-3px_#0003,0_4px_6px_-2px_#0000001a]",
+        className
+      )}
       {...props}
     />
   )
@@ -371,7 +374,8 @@ function SidebarContent({ className, ...props }: React.ComponentProps<"div">) {
       data-slot="sidebar-content"
       data-sidebar="content"
       className={cn(
-        "no-scrollbar flex min-h-0 flex-1 flex-col gap-0 overflow-auto group-data-[collapsible=icon]:overflow-hidden p-4",
+        // Open: 16px padding. Collapsed: 8px, so 60px rail - 16px = 44px button
+        "no-scrollbar flex min-h-0 flex-1 flex-col px-4 py-3 gap-0 overflow-auto group-data-[collapsible=icon]:overflow-hidden group-data-[collapsible=icon]:px-2",
         className
       )}
       {...props}
@@ -458,8 +462,9 @@ function SidebarMenu({ className, ...props }: React.ComponentProps<"ul">) {
       data-slot="sidebar-menu"
       data-sidebar="menu"
       className={cn(
-        "flex w-full min-w-0 flex-col bg-background rounded-t-md rounded-b-md",
-        "group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:bg-transparent",
+        "flex w-full min-w-0 flex-col rounded-md bg-background",
+        // Collapsed: no panel background, small gap between the icon tiles
+        "group-data-[collapsible=icon]:gap-1 group-data-[collapsible=icon]:bg-transparent group-data-[collapsible=icon]:p-0",
         className
       )}
       {...props}
@@ -479,7 +484,17 @@ function SidebarMenuItem({ className, ...props }: React.ComponentProps<"li">) {
 }
 
 const sidebarMenuButtonVariants = cva(
-  "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:rounded-md group-data-[collapsible=icon]:p-2! hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:font-medium data-active:text-sidebar-accent-foreground [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
+  [
+    "peer/menu-button group/menu-button flex w-full cursor-pointer items-center gap-2 overflow-hidden text-left ring-sidebar-ring outline-hidden transition-colors",
+    // Open: 12px top/bottom, 10px left/right, 16px bold text
+    "px-4 py-3 text-base font-bold",
+    // Icons: 20x20, icon-color by default, white on hover
+    "[&_svg]:size-5 [&_svg]:shrink-0 [&>span:last-child]:truncate [&>svg:first-child]:text-icon-color hover:[&>svg:first-child]:text-white",
+    // Collapsed: 44x44 tile, icon centred (44 - 2*12 = 20)
+    "group-data-[collapsible=icon]:size-11! group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:rounded-md group-data-[collapsible=icon]:p-3! group-data-[collapsible=icon]:[&>span]:hidden",
+    // States
+    "group-has-data-[sidebar=menu-action]/menu-item:pr-8 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-open:hover:bg-sidebar-accent data-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground",
+  ],
   {
     variants: {
       variant: {
@@ -488,9 +503,9 @@ const sidebarMenuButtonVariants = cva(
           "bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
       },
       size: {
-        default: "h-8 text-sm",
-        sm: "h-7 text-xs",
-        lg: "h-12 text-sm group-data-[collapsible=icon]:p-0!",
+        default: "h-auto",
+        sm: "h-auto text-sm",
+        lg: "h-auto group-data-[collapsible=icon]:p-0!",
       },
     },
     defaultVariants: {
@@ -522,7 +537,7 @@ function SidebarMenuButton({
       },
       props
     ),
-    render: !tooltip ? render : <TooltipTrigger render={render} />,
+    render: !tooltip ? render : <TooltipTrigger delay={0} closeDelay={0} render={render} />,
     state: {
       slot: "sidebar-menu-button",
       sidebar: "menu-button",
@@ -570,7 +585,7 @@ function SidebarMenuAction({
         className: cn(
           "absolute top-1.5 right-1 flex aspect-square w-5 items-center justify-center rounded-md p-0 text-sidebar-foreground ring-sidebar-ring outline-hidden transition-transform group-data-[collapsible=icon]:hidden peer-hover/menu-button:text-sidebar-accent-foreground peer-data-[size=default]/menu-button:top-1.5 peer-data-[size=lg]/menu-button:top-2.5 peer-data-[size=sm]/menu-button:top-1 after:absolute after:-inset-2 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 md:after:hidden [&>svg]:size-4 [&>svg]:shrink-0",
           showOnHover &&
-            "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 peer-data-active/menu-button:text-sidebar-accent-foreground aria-expanded:opacity-100 md:opacity-0",
+          "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 peer-data-active/menu-button:text-sidebar-accent-foreground aria-expanded:opacity-100 md:opacity-0",
           className
         ),
       },
@@ -645,7 +660,7 @@ function SidebarMenuSub({ className, ...props }: React.ComponentProps<"ul">) {
       data-slot="sidebar-menu-sub"
       data-sidebar="menu-sub"
       className={cn(
-        "ml-3.5 flex min-w-0 translate-x-px flex-col border-l border-sidebar-border pl-2.5 py-0.5 group-data-[collapsible=icon]:hidden",
+        "ml-6 flex min-w-0 translate-x-px flex-col border-l border-sidebar-border py-0 group-data-[collapsible=icon]:hidden",
         className
       )}
       {...props}
@@ -683,7 +698,10 @@ function SidebarMenuSubButton({
     props: mergeProps<"a">(
       {
         className: cn(
-          "flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden px-2 text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[size=md]:text-sm data-[size=sm]:text-xs data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 [&>svg]:text-sidebar-accent-foreground",
+          // Same as menu items: 12px top/bottom, 10px left/right, 16px bold, 20px icons
+          "flex min-w-0 cursor-pointer items-center gap-2 overflow-hidden px-4 py-3 text-base font-bold text-sidebar-foreground ring-sidebar-ring outline-hidden group-data-[collapsible=icon]:hidden",
+          "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground",
+          "[&>span:last-child]:truncate [&>svg]:size-5 [&>svg]:shrink-0 [&>svg]:text-icon-color hover:[&>svg]:text-white",
           className
         ),
       },

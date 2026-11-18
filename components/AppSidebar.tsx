@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/collapsible";
 import {
   ChevronDown,
+  ChevronRight,
   Dices,
   Gift,
   Globe,
@@ -34,7 +35,7 @@ import {
   type LucideIcon
 } from "lucide-react";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Button } from "./ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "cn";
@@ -49,9 +50,9 @@ type SidebarItem = {
   icon: LucideIcon;
   label: string;
   active?: boolean;
-  chevron?: boolean;
-  separator?: boolean;
-  collapsedOnly?: boolean;
+  chevron?: boolean; // shows the small right arrow on the collapsed rail
+  separator?: boolean; // adds a line after this item
+  collapsedOnly?: boolean; // only shows on the collapsed rail (Casino / Sports)
   children?: SidebarLink[];
 };
 
@@ -66,9 +67,9 @@ const sidebarTop: SidebarItem[] = [
     label: "Promotions",
     chevron: true,
     children: [
-      { icon: Gift, label: "Welcome Bonus", href: "/promotions/welcome" },
-      { icon: RefreshCw, label: "Weekly Reload", href: "/promotions/welcome" },
-      { icon: HandCoins, label: "VIP Offers", href: "/promotions/welcome" },
+      { icon: Gift, label: "Welcome Bonus", href: "#" },
+      { icon: RefreshCw, label: "Weekly Reload", href: "#" },
+      { icon: HandCoins, label: "VIP Offers", href: "#" },
     ],
   },
   { icon: Mountain, label: "VIP Club" },
@@ -76,11 +77,22 @@ const sidebarTop: SidebarItem[] = [
   { icon: Trophy, label: "Challenges" },
   { icon: Newspaper, label: "Blog" },
   { icon: MessageSquareMore, label: "Forum", separator: true },
-  { icon: Handshake, label: "Sponsorships", chevron: true },
+  { icon: Handshake, label: "Sponsorships" },
   { icon: ShieldCheck, label: "Responsible Gambling" },
   { icon: Headset, label: "Live Support" },
-  { icon: Globe, label: "Language", chevron: true },
+  { icon: Globe, label: "Language" },
 ];
+
+// Small right arrow, only on the collapsed rail.
+// It sits next to the button (not inside it) because the button has overflow-hidden.
+function CollapsedArrow() {
+  return (
+    <ChevronRight
+      aria-hidden
+      className="pointer-events-none absolute top-1/2 right-0 hidden size-3 -translate-y-1/2 text-icon-color group-hover/menu-item:text-white group-data-[collapsible=icon]:block"
+    />
+  );
+}
 
 type SidebarNavItemProps = Omit<SidebarItem, "separator" | "collapsedOnly"> & {
   className?: string;
@@ -91,15 +103,30 @@ function SidebarNavItem({
   icon: Icon,
   label,
   active,
+  chevron,
   children,
   className,
-  buttonClassName
+  buttonClassName,
 }: SidebarNavItemProps) {
+  const { state, isMobile, setOpen: setSidebarOpen } = useSidebar();
+  const [itemOpen, setItemOpen] = useState(false);
+  const collapsed = state === "collapsed" && !isMobile;
+
   if (children) {
     return (
       <Collapsible
         render={<SidebarMenuItem className={className} />}
         className="group/collapsible"
+        open={itemOpen}
+        onOpenChange={(next) => {
+          if (collapsed) {
+            // Collapsed rail: expand the sidebar and show the options
+            setSidebarOpen(true);
+            setItemOpen(true);
+          } else {
+            setItemOpen(next);
+          }
+        }}
       >
         <CollapsibleTrigger
           className="w-full"
@@ -107,10 +134,12 @@ function SidebarNavItem({
             <SidebarMenuButton tooltip={label} className={buttonClassName}>
               <Icon />
               <span>{label}</span>
-              <ChevronDown className="text-muted-foreground ml-auto size-3 transition-transform group-data-[collapsible=icon]:hidden in-data-panel-open:rotate-180" />
+              <ChevronDown className="ml-auto size-4! text-icon-color transition-transform group-hover/menu-button:text-white group-data-[collapsible=icon]:hidden in-data-panel-open:rotate-180" />
             </SidebarMenuButton>
           }
         />
+
+        <CollapsedArrow />
 
         <CollapsibleContent>
           <SidebarMenuSub>
@@ -130,10 +159,15 @@ function SidebarNavItem({
 
   return (
     <SidebarMenuItem className={className}>
-      <SidebarMenuButton isActive={active} tooltip={label} className={buttonClassName}>
+      <SidebarMenuButton
+        isActive={active}
+        tooltip={label}
+        className={buttonClassName}
+      >
         <Icon />
         <span>{label}</span>
       </SidebarMenuButton>
+      {chevron && <CollapsedArrow />}
     </SidebarMenuItem>
   );
 }
@@ -142,6 +176,7 @@ const AppSidebar = () => {
   const { state, isMobile } = useSidebar();
   const collapsed = state === "collapsed" && !isMobile;
 
+  // First / last item actually on screen (Casino & Sports are hidden when open)
   const visible = sidebarTop.filter((i) => collapsed || !i.collapsedOnly);
   const firstLabel = visible[0]?.label;
   const lastLabel = visible[visible.length - 1]?.label;
@@ -169,15 +204,21 @@ const AppSidebar = () => {
                   {...item}
                   className={onlyCollapsed}
                   buttonClassName={cn(
+                    // Open: one block with rounded top & bottom
                     "rounded-none",
                     item.label === firstLabel && "rounded-t-md",
-                    item.label === lastLabel && "rounded-b-md"
+                    item.label === lastLabel && "rounded-b-md",
+                    // Collapsed: Casino / Sports get the same tile as the header buttons
+                    collapsedOnly && "group-data-[collapsible=icon]:bg-[#213545]"
                   )}
                 />
                 {separator && (
                   <li
                     role="presentation"
-                    className={`mx-2 my-2.5 h-px shrink-0 bg-white/30 group-data-[collapsible=icon]:m-0 ${onlyCollapsed}`}
+                    className={cn(
+                      "mx-2 my-2.5 h-px shrink-0 bg-sidebar-border group-data-[collapsible=icon]:mx-1 group-data-[collapsible=icon]:my-2",
+                      onlyCollapsed
+                    )}
                   />
                 )}
               </Fragment>
