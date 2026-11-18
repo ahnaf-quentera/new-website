@@ -86,10 +86,12 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0); */
+
+  --sidebar-border: oklch(32.722% 0.00858 106.939);
+
   --radius: 0.625rem;
   --background: oklch(21.6% 0.006 56.043);
   --footer-background: oklch(26.8% 0.007 34.298);
-  /* --primary: oklch(0.704 0.191 22.216); */
   --primary: #FFB81C;
   --primary-foreground: #0B0B0D;
   --secondary: #3e586c;

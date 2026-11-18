@@ -19,18 +19,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import {
-  SidebarInset,
-  SidebarProvider
-} from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import Header from "@/components/Header/Header";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import Image from "next/image";
-import Link from "next/link";
 import {
   liveCasino,
   LoadMore,
@@ -49,6 +40,11 @@ import {
 import { CountdownRing, PromoCard } from "./racesRaffles";
 import Footer from "@/components/Footer/Footer";
 import AppSidebar from "@/components/AppSidebar";
+import { useState } from "react";
+import { Modal } from "@/components/Auth/AuthButtons";
+import RegisterModal from "@/components/Auth/RegisterModal";
+import SignInModal from "@/components/Auth/SignInModal";
+import ForgotPasswordModal from "@/components/Auth/ForgotPasswordModal";
 
 const socials = [
   { label: "Google", glyph: "G", className: "text-red-400" },
@@ -108,11 +104,12 @@ const games = [
 ];
 
 export default function Home() {
+  const [modal, setModal] = useState<Modal>(null);
   return (
     <SidebarProvider defaultOpen={false}>
       {/* Sidebar: icon rail on desktop, overlay sheet on mobile */}
       <AppSidebar />
-      
+
       {/* SidebarInset renders a <main>, so the page body uses a div */}
       <SidebarInset>
         {/* Top bar */}
@@ -121,27 +118,40 @@ export default function Home() {
         <div className="mx-auto w-full max-w-[calc(1200px+6vw)] px-[3vw] space-y-3 py-3 pb-8">
           {/* Hero */}
           <section className="border-border flex relative overflow-hidden rounded-xl border bg-linear-to-br">
+            {/* Mobile */}
+            <Image
+              src="/banner-mobile.png"
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="pointer-events-none object-cover object-top md:hidden"
+            />
+
+            {/* Desktop */}
             <Image
               src="/banner.png"
               alt=""
               fill
               priority
               sizes="(min-width: 1280px) 1200px, 100vw"
-              className="pointer-events-none object-cover"
+              className="pointer-events-none hidden object-cover md:block"
             />
 
-            <div className="relative z-10 flex max-w-md flex-col items-center gap-4 px-6 py-3 text-center">
+            <div className="relative z-5 mx-auto flex w-full max-w-[350px] flex-col items-center gap-4 px-6 pt-[55vw] pb-6 text-center md:mx-0 md:w-auto md:pt-3 md:pb-3">
               <h1 className="text-xl leading-tight font-bold text-balance md:text-3xl">
                 World&apos;s Largest Online Casino and Sportsbook
               </h1>
 
-              <Button size="lg" className="mt-2 w-full">
+              <Button
+                onClick={() => setModal("register")}
+                size="lg"
+                className="mt-2 w-full"
+              >
                 Register
               </Button>
 
-              <p className="text-muted-foreground text-sm font-medium">
-                Or Continue With
-              </p>
+              <p className=" text-sm font-medium">Or Continue With</p>
 
               <div className="grid w-full grid-cols-3 gap-3">
                 {socials.map(({ label, glyph, className }) => (
@@ -202,7 +212,7 @@ export default function Home() {
             />
             <Badge
               variant="secondary"
-              className="absolute top-1/2 right-3 -translate-y-1/2 rounded-md"
+              className="bg-primary text-primary-foreground absolute top-1/2 right-3 -translate-y-1/2 rounded-md"
             >
               Cmd + K
             </Badge>
@@ -335,14 +345,23 @@ export default function Home() {
           {/* Bets */}
           <section className="pt-4">
             <Tabs defaultValue="casino" className="gap-6">
-              <TabsList className="h-auto max-w-full overflow-x-auto rounded-full p-1.5">
-                <TabsTrigger value="casino" className="rounded-full px-5 py-2">
+              <TabsList className="group-data-horizontal/tabs:h-auto max-w-full gap-2 overflow-x-auto rounded-full bg-black/30 p-2">
+                <TabsTrigger
+                  value="casino"
+                  className="h-auto flex-none rounded-full px-6 py-3 text-base font-semibold text-white/90 data-active:bg-secondary data-active:text-white dark:data-active:border-transparent dark:data-active:bg-secondary"
+                >
                   Casino Bets
                 </TabsTrigger>
-                <TabsTrigger value="sports" className="rounded-full px-5 py-2">
+                <TabsTrigger
+                  value="sports"
+                  className="h-auto flex-none rounded-full px-6 py-3 text-base font-semibold text-white/90 data-active:bg-secondary data-active:text-white dark:data-active:border-transparent dark:data-active:bg-secondary"
+                >
                   Sports Bets
                 </TabsTrigger>
-                <TabsTrigger value="race" className="rounded-full px-5 py-2">
+                <TabsTrigger
+                  value="race"
+                  className="h-auto flex-none rounded-full px-6 py-3 text-base font-semibold text-white/90 data-active:bg-secondary data-active:text-white dark:data-active:border-transparent dark:data-active:bg-secondary"
+                >
                   Race Leaderboard
                 </TabsTrigger>
               </TabsList>
@@ -360,6 +379,22 @@ export default function Home() {
         </div>
         <Footer />
       </SidebarInset>
+      <SignInModal
+        open={modal === "signin"}
+        onOpenChange={(open) => setModal(open ? "signin" : null)}
+        onSwitchToRegister={() => setModal("register")}
+        onForgotPassword={() => setModal("forgot")}
+      />
+      <RegisterModal
+        open={modal === "register"}
+        onOpenChange={(open) => setModal(open ? "register" : null)}
+        onSwitchToSignIn={() => setModal("signin")}
+      />
+      <ForgotPasswordModal
+        open={modal === "forgot"}
+        onOpenChange={(open) => setModal(open ? "forgot" : null)}
+        onSwitchToSignIn={() => setModal("signin")}
+      />
     </SidebarProvider>
   );
 }
