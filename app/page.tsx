@@ -3,77 +3,21 @@
 import {
   ChevronRight,
   Dices,
-  Gift,
-  Globe,
-  Handshake,
-  Headset,
-  MessageSquareMore,
-  Mountain,
-  Newspaper,
-  Puzzle,
   Search,
-  ShieldCheck,
-  Trophy,
   TrendingUp,
   Volleyball,
 } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarHeader,
   SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
-  SidebarProvider,
-  SidebarSeparator,
-  SidebarTrigger,
+  SidebarProvider
 } from "@/components/ui/sidebar";
 import Header from "@/components/Header/Header";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import Link from "next/link";
-
-const sidebarTop = [
-  { icon: Dices, label: "Casino", active: true },
-  { icon: Volleyball, label: "Sports" },
-  {
-    icon: Gift,
-    label: "Promotions",
-    chevron: true,
-    children: [
-      { label: "Welcome Bonus", href: "/promotions/welcome" },
-      { label: "Weekly Reload", href: "/promotions/welcome" },
-      { label: "VIP Offers", href: "/promotions/welcome" },
-    ],
-  },
-  { icon: Mountain, label: "VIP Club" },
-  { icon: Puzzle, label: "Affiliate" },
-  { icon: Trophy, label: "Challenges" },
-  { icon: Newspaper, label: "Blog" },
-  { icon: MessageSquareMore, label: "Forum" },
-];
-
-const sidebarBottom = [
-  { icon: Handshake, label: "Sponsorships", chevron: true },
-  { icon: ShieldCheck, label: "Responsible Gambling" },
-  { icon: Headset, label: "Live Support" },
-  { icon: Globe, label: "Language", chevron: true },
-];
+import AppSidebar from "@/components/AppSidebar";
 
 const socials = [
   { label: "Google", glyph: "G", className: "text-red-400" },
@@ -133,88 +77,11 @@ const games = [
 ];
 
 export default function Home() {
-  const renderItem = ({
-    icon: Icon,
-    label,
-    active,
-    children,
-  }: {
-    icon: React.ElementType;
-    label: string;
-    active?: boolean;
-    children?: { label: string; href: string }[];
-  }) => {
-    if (children) {
-      return (
-        <Collapsible
-          key={label}
-          render={<SidebarMenuItem />}
-          className="group/collapsible"
-        >
-          <CollapsibleTrigger
-            className={"w-full"}
-            render={
-              <SidebarMenuButton tooltip={label} className="h-10">
-                <Icon />
-                <span>{label}</span>
-                <ChevronRight className="text-muted-foreground ml-auto size-3 transition-transform group-data-[collapsible=icon]:hidden group-data-[state=open]/collapsible:rotate-90" />
-              </SidebarMenuButton>
-            }
-          ></CollapsibleTrigger>
-
-          <CollapsibleContent>
-            <SidebarMenuSub>
-              {children.map((child) => (
-                <SidebarMenuSubItem key={child.label}>
-                  <SidebarMenuSubButton
-                    render={<Link href={child.href}>{child.label}</Link>}
-                  >
-                    {child.label}
-                  </SidebarMenuSubButton>
-                </SidebarMenuSubItem>
-              ))}
-            </SidebarMenuSub>
-          </CollapsibleContent>
-        </Collapsible>
-      );
-    }
-
-    return (
-      <SidebarMenuItem key={label}>
-        <SidebarMenuButton isActive={active} tooltip={label} className="h-10">
-          <Icon />
-          <span>{label}</span>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-    );
-  };
-
   return (
     <SidebarProvider defaultOpen={false}>
       {/* Sidebar: icon rail on desktop, overlay sheet on mobile */}
-      <Sidebar collapsible="icon">
-        <SidebarHeader>
-          {/* Desktop toggle (the sidebar itself is an overlay on mobile) */}
-          <SidebarTrigger className="size-10" />
-        </SidebarHeader>
-
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <SidebarMenu>{sidebarTop.map(renderItem)}</SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-
-          <SidebarSeparator />
-
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <SidebarMenu>{sidebarBottom.map(renderItem)}</SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
-
+      <AppSidebar />
+      
       {/* SidebarInset renders a <main>, so the page body uses a div */}
       <SidebarInset>
         {/* Top bar */}
@@ -222,18 +89,18 @@ export default function Home() {
 
         <div className="mx-auto w-full max-w-[calc(1200px+6vw)] px-[3vw] space-y-6 py-3 pb-16">
           {/* Hero */}
-          <section className="border-border flex relative overflow-hidden rounded-xl border bg-gradient-to-br from-blue-600 via-slate-900 to-slate-950">
+          <section className="border-border flex relative overflow-hidden rounded-xl border bg-linear-to-br from-blue-600 via-slate-900 to-slate-950">
             <div
               aria-hidden
-              className="pointer-events-none absolute -left-10 -bottom-10 size-56 rounded-full bg-gradient-to-br from-blue-400/60 to-blue-700/10 blur-sm"
+              className="pointer-events-none absolute -left-10 -bottom-10 size-56 rounded-full bg-linear-to-br from-blue-400/60 to-blue-700/10 blur-sm"
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-8 -bottom-12 size-64 rounded-full bg-gradient-to-br from-orange-500/70 to-red-800/20 blur-sm"
+              className="pointer-events-none absolute -right-8 -bottom-12 size-64 rounded-full bg-linear-to-br from-orange-500/70 to-red-800/20 blur-sm"
             />
             <div
               aria-hidden
-              className="pointer-events-none absolute top-0 right-0 hidden h-full w-1/3 bg-[repeating-conic-gradient(var(--foreground)_0_25%,transparent_0_50%)] [mask-image:linear-gradient(to_bottom_left,black,transparent_70%)] bg-[length:48px_48px] opacity-25 md:block"
+              className="pointer-events-none absolute top-0 right-0 hidden h-full w-1/3 bg-[repeating-conic-gradient(var(--foreground)_0_25%,transparent_0_50%)] mask-[linear-gradient(to_bottom_left,black,transparent_70%)] bg-size-[48px_48px] opacity-25 md:block"
             />
 
             <div className="relative z-10 mx-auto flex max-w-md flex-col items-center gap-4 px-6 py-9 text-center">
@@ -326,7 +193,7 @@ export default function Home() {
               {games.map((game) => (
                 <div key={game.title} className="space-y-2">
                   <div
-                    className={`relative flex aspect-[3/4] flex-col justify-end overflow-hidden rounded-lg bg-gradient-to-b p-2 text-center ${game.gradient}`}
+                    className={`relative flex aspect-3/4 flex-col justify-end overflow-hidden rounded-lg bg-linear-to-b p-2 text-center ${game.gradient}`}
                   >
                     <span className="bg-background/80 absolute top-1.5 left-1.5 flex size-5 items-center justify-center rounded-full text-[10px] font-black italic">
                       S
