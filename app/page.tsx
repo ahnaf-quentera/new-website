@@ -16,7 +16,12 @@ import {
   Trophy,
   TrendingUp,
   Volleyball,
+  Flame,
+  Tv,
+  Timer,
+  Ticket,
 } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -47,6 +52,23 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Link from "next/link";
+import {
+  liveCasino,
+  LoadMore,
+  originals,
+  SectionHeader,
+  sports,
+  TileGrid,
+} from "./imageRender";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  BetsTable,
+  casinoBets,
+  LeaderboardTable,
+  sportsBets,
+} from "./betsTable";
+import { CountdownRing, PromoCard } from "./racesRaffles";
+import Footer from "@/components/Footer/Footer";
 
 const sidebarTop = [
   { icon: Dices, label: "Casino", active: true },
@@ -56,9 +78,9 @@ const sidebarTop = [
     label: "Promotions",
     chevron: true,
     children: [
-      { label: "Welcome Bonus", href: "/promotions/welcome" },
-      { label: "Weekly Reload", href: "/promotions/welcome" },
-      { label: "VIP Offers", href: "/promotions/welcome" },
+      { icon: Gift, label: "Welcome Bonus", href: "/#" },
+      { icon: Gift, label: "Weekly Reload", href: "/#" },
+      { icon: Gift, label: "VIP Offers", href: "/#" },
     ],
   },
   { icon: Mountain, label: "VIP Club" },
@@ -142,7 +164,7 @@ export default function Home() {
     icon: React.ElementType;
     label: string;
     active?: boolean;
-    children?: { label: string; href: string }[];
+    children?: { label: string; href: string; icon: React.ElementType }[];
   }) => {
     if (children) {
       return (
@@ -166,10 +188,9 @@ export default function Home() {
             <SidebarMenuSub>
               {children.map((child) => (
                 <SidebarMenuSubItem key={child.label}>
-                  <SidebarMenuSubButton
-                    render={<Link href={child.href}>{child.label}</Link>}
-                  >
-                    {child.label}
+                  <SidebarMenuSubButton render={<Link href={child.href} />}>
+                    <child.icon />
+                    <span>{child.label}</span>
                   </SidebarMenuSubButton>
                 </SidebarMenuSubItem>
               ))}
@@ -195,7 +216,7 @@ export default function Home() {
       <Sidebar collapsible="icon">
         <SidebarHeader>
           {/* Desktop toggle (the sidebar itself is an overlay on mobile) */}
-          <SidebarTrigger className="size-10" />
+          <SidebarTrigger className="justify-center" />
         </SidebarHeader>
 
         <SidebarContent>
@@ -220,7 +241,7 @@ export default function Home() {
         {/* Top bar */}
         <Header />
 
-        <div className="mx-auto w-full max-w-[calc(1200px+6vw)] px-[3vw] space-y-6 py-3 pb-16">
+        <div className="mx-auto w-full max-w-[calc(1200px+6vw)] px-[3vw] space-y-3 py-3 pb-8">
           {/* Hero */}
           <section className="border-border flex relative overflow-hidden rounded-xl border bg-gradient-to-br from-blue-600 via-slate-900 to-slate-950">
             <div
@@ -236,8 +257,8 @@ export default function Home() {
               className="pointer-events-none absolute top-0 right-0 hidden h-full w-1/3 bg-[repeating-conic-gradient(var(--foreground)_0_25%,transparent_0_50%)] [mask-image:linear-gradient(to_bottom_left,black,transparent_70%)] bg-[length:48px_48px] opacity-25 md:block"
             />
 
-            <div className="relative z-10 mx-auto flex max-w-md flex-col items-center gap-4 px-6 py-9 text-center">
-              <h1 className="text-3xl leading-tight font-bold text-balance md:text-4xl">
+            <div className="relative z-10 mx-auto flex max-w-md flex-col items-center gap-4 px-6 py-3 text-center">
+              <h1 className="text-xl leading-tight font-bold text-balance md:text-3xl">
                 World&apos;s Largest Online Casino and Sportsbook
               </h1>
 
@@ -316,13 +337,13 @@ export default function Home() {
 
           {/* Trending games */}
           <section className="space-y-4">
-            <h2 className="flex items-center gap-2 text-xl font-semibold">
+            <h2 className="flex items-center gap-2 font-semibold">
               <TrendingUp className="text-muted-foreground size-5" />
               Trending Games
               <ChevronRight className="size-5" />
             </h2>
 
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+            <div className="grid grid-cols-5 gap-3 sm:grid-cols-6 lg:grid-cols-8">
               {games.map((game) => (
                 <div key={game.title} className="space-y-2">
                   <div
@@ -362,14 +383,109 @@ export default function Home() {
           </section>
 
           {/* Trending sports */}
-          <section>
-            <h2 className="flex items-center gap-2 text-xl font-semibold">
-              <Volleyball className="text-muted-foreground size-5" />
-              Trending Sports
-              <ChevronRight className="size-5" />
+          <section className="space-y-4">
+            <SectionHeader icon={Volleyball} title="Trending Sports" />
+            <TileGrid items={sports} />
+            <LoadMore />
+          </section>
+
+          {/* Originals */}
+          <section className="space-y-4">
+            <SectionHeader icon={Flame} title="DinamoBet Originals" />
+            <TileGrid items={originals} />
+            <LoadMore />
+          </section>
+
+          {/* Live casino */}
+          <section className="space-y-4">
+            <SectionHeader icon={Tv} title="Live Casino" />
+            <TileGrid items={liveCasino} />
+            <LoadMore />
+          </section>
+
+          {/* Races & Raffles */}
+          <section className="space-y-4 pt-4">
+            <h2 className="flex items-center gap-2 font-semibold">
+              <Timer className="text-muted-foreground size-5" />
+              Races &amp; Raffles
             </h2>
+
+            <div className="grid gap-3 md:grid-cols-2">
+              <PromoCard
+                title="$100k Race"
+                description="Ready to race to the top?"
+                action={
+                  <Button variant="secondary" size="lg">
+                    Leaderboard
+                  </Button>
+                }
+                info="Wager on any game to climb the leaderboard. Top 5,000 players win a share of the prize pool."
+                ring={
+                  <CountdownRing
+                    initialSeconds={40 * 60 + 58}
+                    totalSeconds={60 * 60}
+                  />
+                }
+                footer={
+                  <>
+                    <Trophy className="text-muted-foreground size-4" />
+                    <span className="text-sm font-medium">Not entered yet</span>
+                  </>
+                }
+              />
+              <PromoCard
+                title="$75k Weekly Raffle"
+                description="Finish your week with a win!"
+                action={
+                  <Button variant="secondary" size="lg">
+                    0 Tickets
+                  </Button>
+                }
+                info="Earn 1 ticket for every $1,000 wagered. Winners are drawn every week."
+                ring={
+                  <CountdownRing
+                    initialSeconds={4 * 86400}
+                    totalSeconds={7 * 86400}
+                  />
+                }
+                footer={
+                  <>
+                    <Ticket className="text-muted-foreground size-4 shrink-0" />
+                    <Progress value={0} className="flex-1" />
+                    <span className="text-sm font-medium tabular-nums">0%</span>
+                  </>
+                }
+              />
+            </div>
+          </section>
+
+          {/* Bets */}
+          <section className="pt-4">
+            <Tabs defaultValue="casino" className="gap-6">
+              <TabsList className="h-auto max-w-full overflow-x-auto rounded-full p-1.5">
+                <TabsTrigger value="casino" className="rounded-full px-5 py-2">
+                  Casino Bets
+                </TabsTrigger>
+                <TabsTrigger value="sports" className="rounded-full px-5 py-2">
+                  Sports Bets
+                </TabsTrigger>
+                <TabsTrigger value="race" className="rounded-full px-5 py-2">
+                  Race Leaderboard
+                </TabsTrigger>
+              </TabsList>
+              <TabsContent value="casino">
+                <BetsTable rows={casinoBets} />
+              </TabsContent>
+              <TabsContent value="sports">
+                <BetsTable rows={sportsBets} />
+              </TabsContent>
+              <TabsContent value="race">
+                <LeaderboardTable />
+              </TabsContent>
+            </Tabs>
           </section>
         </div>
+        <Footer />
       </SidebarInset>
     </SidebarProvider>
   );
