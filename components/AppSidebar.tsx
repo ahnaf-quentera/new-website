@@ -190,8 +190,8 @@ const AppSidebar = () => {
         <SidebarTrigger />
 
         <div className="grid flex-1 items-center min-w-0 grid-cols-2 gap-2 group-data-[collapsible=icon]:hidden pr-4">
-          <Button variant="secondary" className="w-full border-0 h-9 bg-icon-tile">Casino</Button>
-          <Button variant="secondary" className="w-full border-0 h-9 bg-icon-tile">Sports</Button>
+          <Button variant="secondary" className="w-full border-0 h-9 bg-icon-title">Casino</Button>
+          <Button variant="secondary" className="w-full border-0 h-9 bg-icon-title">Sports</Button>
         </div>
       </SidebarHeader>
 
@@ -210,8 +210,8 @@ const AppSidebar = () => {
                     "rounded-none",
                     item.label === firstLabel && "rounded-t-md",
                     item.label === lastLabel && "rounded-b-md",
-                    // Collapsed: Casino / Sports get the same tile as the header buttons
-                    collapsedOnly && "group-data-[collapsible=icon]:bg-icon-tile"
+                    collapsedOnly &&
+                    "group-data-[collapsible=icon]:bg-icon-title group-data-[collapsible=icon]:[&>svg:first-child]:text-white group-data-[collapsible=icon]:hover:[&>svg:first-child]:text-white!"
                   )}
                 />
                 {separator && (

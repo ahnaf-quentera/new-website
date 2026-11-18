@@ -4,7 +4,7 @@ import { ModeToggle } from "./ThemeToggle";
 
 const Header = () => {
   return (
-    <header className="bg-background sticky top-0 z-10 shadow-[0_4px_6px_-1px_#0003,0_2px_4px_-1px_#0000001f]">
+    <header className="bg-header-background sticky top-0 z-10 shadow-[0_4px_6px_-1px_#0003,0_2px_4px_-1px_#0000001f]">
       <div className="mx-auto flex w-full h-15 items-center justify-between max-w-[calc(1200px+6vw)] px-[3vw]">
         <Image
           src="/light-logo.png"
