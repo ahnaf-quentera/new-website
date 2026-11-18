@@ -29,6 +29,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import Image from "next/image";
 import Link from "next/link";
 import {
   liveCasino,
@@ -119,21 +120,17 @@ export default function Home() {
 
         <div className="mx-auto w-full max-w-[calc(1200px+6vw)] px-[3vw] space-y-3 py-3 pb-8">
           {/* Hero */}
-          <section className="border-border flex relative overflow-hidden rounded-xl border bg-linear-to-br from-blue-600 via-slate-900 to-slate-950">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -left-10 -bottom-10 size-56 rounded-full bg-linear-to-br from-blue-400/60 to-blue-700/10 blur-sm"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-8 -bottom-12 size-64 rounded-full bg-linear-to-br from-orange-500/70 to-red-800/20 blur-sm"
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute top-0 right-0 hidden h-full w-1/3 bg-[repeating-conic-gradient(var(--foreground)_0_25%,transparent_0_50%)] mask-[linear-gradient(to_bottom_left,black,transparent_70%)] bg-size-[48px_48px] opacity-25 md:block"
+          <section className="border-border flex relative overflow-hidden rounded-xl border bg-gradient-to-br">
+            <Image
+              src="/banner.png"
+              alt=""
+              fill
+              priority
+              sizes="(min-width: 1280px) 1200px, 100vw"
+              className="pointer-events-none object-cover"
             />
 
-            <div className="relative z-10 mx-auto flex max-w-md flex-col items-center gap-4 px-6 py-3 text-center">
+            <div className="relative z-10 flex max-w-md flex-col items-center gap-4 px-6 py-3 text-center">
               <h1 className="text-xl leading-tight font-bold text-balance md:text-3xl">
                 World&apos;s Largest Online Casino and Sportsbook
               </h1>
