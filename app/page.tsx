@@ -138,7 +138,7 @@ export default function Home() {
               className="pointer-events-none hidden object-cover md:block"
             />
 
-            <div className="relative z-5 mx-auto flex w-full max-w-[350px] flex-col items-center gap-4 px-6 pt-[55vw] pb-6 text-center md:mx-0 md:w-auto md:pt-3 md:pb-3">
+            <div className="relative z-5 mx-auto flex w-full max-w-87.5 flex-col items-center gap-4 px-6 pt-[55vw] pb-6 text-center md:mx-0 md:w-auto md:pt-3 md:pb-3">
               <h1 className="text-xl leading-tight font-bold text-balance md:text-3xl">
                 World&apos;s Largest Online Casino and Sportsbook
               </h1>
