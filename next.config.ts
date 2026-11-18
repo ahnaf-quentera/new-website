@@ -5,14 +5,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   cacheComponents: false,
   partialPrefetching: false,
-  turbopack: {
-    rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
-    },
-  },
 };
 
 export default nextConfig;
