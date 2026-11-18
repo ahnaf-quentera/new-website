@@ -50,6 +50,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   --color-icon-color: var(--icon-color);
+  --color-icon-tile: var(--icon-tile);
 }
 
 :root {
@@ -86,15 +87,18 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0); */
+
+  --sidebar-border: oklch(32.722% 0.00858 106.939);
+
   --radius: 0.625rem;
   --background: oklch(21.6% 0.006 56.043);
   --footer-background: oklch(26.8% 0.007 34.298);
-  /* --primary: oklch(0.704 0.191 22.216); */
   --primary: #FFB81C;
   --primary-foreground: #0B0B0D;
   --secondary: #3e586c;
   --secondary-foreground: white;
-  --icon-color: blue;
+  --icon-color: #d6d3d1; /* soft white (stone-300) */
+  --icon-tile: #44403c; /* dark stone (stone-700) */
   --card: oklch(0.205 0 0);
   --foreground: oklch(0.985 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -131,6 +135,7 @@
   --secondary: #3e586c;
   --secondary-foreground: white;
   --icon-color: #a1bfd6;
+  --icon-tile: #213545;
   --sidebar: #0e202d;
   --sidebar-border: #a1bfd6;
   --sidebar-accent: #ecf3f90d;
